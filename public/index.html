@@ -16,8 +16,38 @@
     </form>
 </body>
 <script type="text/javascript">
-    
-    var socket = io('https://localhost:3000');
-    console.log('Socket => ',socket);
+   socket = io('http://localhost:3000');
+
+   function renderMessage(message){
+        console.log(message);
+       $('#messages').append(
+           '<strong>'+ message.autor+' -> </strong>'+message.mensagem+'<br>'
+       );
+   }
+   socket.on('previousMessages', (previousMessages) => {
+       previousMessages.forEach(message => {
+           renderMessage(message);
+       })
+   });
+
+   socket.on('receivedMessages', (message) => {
+       renderMessage(message);
+   });
+
+   $('#chat').submit(function (event) {
+        event.preventDefault();
+
+        var autor = $('#username').val();
+        var mensagem = $('#mensagem').val();
+
+        if(autor.length && mensagem.length){
+            const messageObj = {
+                autor: autor,
+                mensagem: mensagem
+            };
+            renderMessage(messageObj);
+            socket.emit('sendObj', messageObj);
+        }
+   });
 </script>
 </html>
