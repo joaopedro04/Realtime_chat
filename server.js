@@ -10,18 +10,30 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
 
-app.use('/#/', (req, res) => {
+app.use('/', (req, res) => {
     res.render('index.html');
 });
 
-io.on('connection', sockets => {
-    io.socket.get();
-    console.log('Socket conectado!!!');
-});
+let messages = [];
 
-
-
-server.listen(3000, () => {
+io.on('connection', (socket) => {
     console.log(' ');
-    console.log("###### o server está rodando em https://localhost:3000 #######");
+    console.log('############################');
+    console.log('Socket conectado');
+    console.log('User_id => ', socket.id);
+
+    socket.emit('previousMessages', messages);
+
+    socket.on('sendObj', data =>{
+        console.log('socket.on recebe --->', data);
+        // let messages = [];
+        messages.push(data);
+        console.log('array de mensagens ---->', messages);
+
+        socket.broadcast.emit('receivedMessages', data);
+    });
 });
+
+
+server.listen(3000);
+console.log('Servidor ONLINE em http://localhost:3000');
