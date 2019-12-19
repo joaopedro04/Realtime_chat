@@ -21,7 +21,7 @@
    function renderMessage(message){
         console.log(message);
        $('#messages').append(
-           '<strong>'+ message.autor+' -> </strong>'+message.mensagem+'<br>'
+           '<strong>'+ message.autor+' -> </strong>'+message.mensagem+'<br> '
        );
    }
    socket.on('previousMessages', (previousMessages) => {

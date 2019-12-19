@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('receivedMessages', data);
     });
 });
-
+ 
 
 server.listen(3000);
 console.log('Servidor ONLINE em http://localhost:3000');
