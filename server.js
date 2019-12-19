@@ -37,3 +37,4 @@ io.on('connection', (socket) => {
 
 server.listen(3000);
 console.log('Servidor ONLINE em http://localhost:3000');
+console.log('é us guri');
